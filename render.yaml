@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: codenova-ai-backend
+    env: node
+    region: oregon
+    plan: free
+    branch: master
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm run build && npm start
+    envVars:
+      - key: PORT
+        value: "4174"
+      - key: NODE_ENV
+        value: "production"
+      - key: MONGODB_URI
+        value: ""
+      - key: JWT_SECRET
+        value: ""
+      - key: OPENROUTER_API_KEY
+        value: ""
