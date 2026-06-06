@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - '4174:4174'
+    environment:
+      NODE_ENV: production
+      PORT: 4174
+      MONGODB_URI: ${MONGODB_URI:-mongodb://host.docker.internal:27017/codenova-ai}
+      JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-sk-or-your-openrouter-api-key}
+      CORS_ORIGIN: http://localhost:4173
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - '4173:4173'
+    environment:
+      VITE_API_URL: http://localhost:4174/api
+    depends_on:
+      - backend
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
