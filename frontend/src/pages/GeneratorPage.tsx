@@ -22,7 +22,7 @@ export default function GeneratorPage() {
     setLoading(true);
     try {
       const response = await generateCode({ prompt, language, framework });
-      setResult(response.data.code || response.data);
+      setResult(response.data.code || '');
     } catch (err: any) {
       const message = err?.response?.data?.message || err?.message || 'Unable to generate code.';
       setError(message.includes('API key') ? 'Unable to generate code. Please verify your API key and try again.' : message);
@@ -34,7 +34,7 @@ export default function GeneratorPage() {
   const handleSave = async () => {
     if (!result) return;
     try {
-      await saveProject({ title, prompt, language, framework, generatedCode: result });
+      await saveProject({ title, description: prompt, language, framework, code: result });
       alert('Project saved to your workspace.');
     } catch {
       alert('Failed to save project. Please sign in and try again.');

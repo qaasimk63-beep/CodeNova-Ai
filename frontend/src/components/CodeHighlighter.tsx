@@ -1,5 +1,6 @@
 import React from 'react';
-import { Highlight, themes } from 'prism-react-renderer';
+import Highlight, { defaultProps } from 'prism-react-renderer';
+import theme from 'prism-react-renderer/themes/nightOwl';
 import clsx from 'clsx';
 
 interface CodeHighlighterProps {
@@ -16,7 +17,7 @@ const CodeHighlighter: React.FC<CodeHighlighterProps> = ({
   showLineNumbers = true,
 }) => {
   return (
-    <Highlight theme={themes.nightOwl} code={code} language={language as any}>
+    <Highlight {...defaultProps} theme={theme} code={code} language={language as any}>
       {({ className: highlightClassName, style, tokens, getLineProps, getTokenProps }) => (
         <pre
           className={clsx(
@@ -28,14 +29,14 @@ const CodeHighlighter: React.FC<CodeHighlighterProps> = ({
           )}
           style={style}
         >
-          {tokens.map((line, i) => (
+          {tokens.map((line: any, i: number) => (
             <div key={i} {...getLineProps({ line, key: i })}>
               {showLineNumbers && (
                 <span className="inline-block w-8 text-right pr-4 text-slate-500 select-none">
                   {i + 1}
                 </span>
               )}
-              {line.map((token, key) => (
+              {line.map((token: any, key: number) => (
                 <span key={key} {...getTokenProps({ token, key })} />
               ))}
             </div>
