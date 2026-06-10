@@ -7,8 +7,12 @@
   ],
   "scripts": {
     "dev": "concurrently \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\"",
+    "build": "npm --prefix frontend run build",
     "start:backend": "npm --prefix backend run dev",
     "start:frontend": "npm --prefix frontend run dev"
+  },
+  "dependencies": {
+    "serverless-http": "^3.0.0"
   },
   "devDependencies": {
     "concurrently": "^8.2.0"
